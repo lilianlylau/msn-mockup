@@ -76,17 +76,53 @@
       text-shadow: none;
     }
 
-    .desktop-controls {
+    .desktop-control-stack {
       position: absolute;
       bottom: 18px;
       left: 18px;
       z-index: 10;
       width: min(340px, calc(100vw - 36px));
+    }
+
+    .desktop-controls {
       padding: 10px;
       border: 1px solid #6c9eda;
       border-radius: 6px;
       background: linear-gradient(#f7fbff, #d4e9ff);
       box-shadow: inset 0 1px white, 0 4px 14px rgba(0,0,0,.22);
+    }
+
+    .other-person-control {
+      width: 100%;
+      margin-bottom: 8px;
+      padding: 7px;
+      border: 1px solid #6c9eda;
+      border-radius: 5px;
+      background: linear-gradient(#f7fbff, #d4e9ff);
+      box-shadow: inset 0 1px white, 0 3px 10px rgba(0,0,0,.2);
+    }
+
+    .other-person-control label {
+      display: block;
+      margin: 0 0 4px;
+      color: #154389;
+      font-weight: bold;
+    }
+
+    .other-person-form {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 5px;
+    }
+
+    .other-person-form input {
+      min-width: 0;
+      height: 25px;
+    }
+
+    .other-person-form .xp-button {
+      min-height: 25px;
+      padding-inline: 9px;
     }
 
     .settings-title {
@@ -772,11 +808,16 @@
         overflow: auto;
       }
 
-      .desktop-controls {
+      .desktop-control-stack {
         left: 10px;
         right: 10px;
         top: 10px;
+        bottom: auto;
         width: auto;
+      }
+
+      .other-person-control {
+        width: 100%;
       }
 
       .messenger {
@@ -984,6 +1025,15 @@
       </div>
     </section>
 
+    <div class="desktop-control-stack">
+    <aside class="other-person-control" aria-label="Other person reply control">
+      <label for="partnerMessageInput">Reply as <span id="partnerReplyName">soccer_master_3000</span></label>
+      <form class="other-person-form" id="partnerChatForm">
+        <input id="partnerMessageInput" autocomplete="off" aria-label="Type the other person's reply">
+        <button class="xp-button" type="submit">Send</button>
+      </form>
+    </aside>
+
     <section class="desktop-controls" aria-label="Messenger settings">
       <p class="settings-title">MSN Messenger Settings</p>
       <div class="control-row">
@@ -1018,6 +1068,7 @@
         </div>
       </div>
     </section>
+    </div>
 
     <section class="window messenger active" data-window="messenger" aria-label="MSN Messenger contact list">
       <header class="titlebar">
@@ -1106,9 +1157,6 @@
       <div class="frame-title-text" id="frameTitleText"><span class="partner-name">iTz_soccer_man</span> - Conversation</div>
       <div class="conversation-log" id="conversationLog" aria-live="polite" contenteditable="true" spellcheck="true" aria-label="Editable conversation history">
         <div class="conversation-address">To: <strong class="partner-name">iTz_soccer_man</strong> &lt;call_me_soccer_master_3000@hotmail.com&gt;</div>
-        <p class="message me"><span class="sender my-name">~xoxogurl~</span> says:<br><span class="message-text">sup :D</span></p>
-        <p class="message them"><span class="sender partner-name">iTz_soccer_man</span> says:<br><span class="message-text">nm u? :P</span></p>
-        <p class="message me"><span class="sender my-name">~xoxogurl~</span> says:<br><span class="message-text">same</span></p>
       </div>
       <div class="frame-photo them has-photo" id="partnerDisplayPic" style="--photo: url('reference/soccer-profile-image.jpeg')" aria-label="Their display picture"></div>
       <div class="frame-photo me has-photo" id="myDisplayPic" style="--photo: url('reference/flower-profile-image.jpeg')" aria-label="Your display picture"></div>
@@ -1148,12 +1196,13 @@
     const triggerToast = document.getElementById("triggerToast");
     const myNameInput = document.getElementById("myNameInput");
     const partnerNameInput = document.getElementById("partnerNameInput");
-    const myNameEls = [...document.querySelectorAll(".my-name")];
-    const partnerNameEls = [...document.querySelectorAll(".partner-name")];
     const myPhotoInput = document.getElementById("myPhotoInput");
     const partnerPhotoInput = document.getElementById("partnerPhotoInput");
     const myDisplayPic = document.getElementById("myDisplayPic");
     const partnerDisplayPic = document.getElementById("partnerDisplayPic");
+    const partnerReplyName = document.getElementById("partnerReplyName");
+    const partnerChatForm = document.getElementById("partnerChatForm");
+    const partnerMessageInput = document.getElementById("partnerMessageInput");
     const frameTitleText = document.getElementById("frameTitleText");
     const chatForm = document.getElementById("chatForm");
     const messageInput = document.getElementById("messageInput");
@@ -1217,12 +1266,13 @@
     function updateNames() {
       const myName = myNameInput.value.trim() || "Me";
       const name = partnerNameInput.value.trim() || "Friend";
-      myNameEls.forEach(el => {
+      document.querySelectorAll(".my-name").forEach(el => {
         el.textContent = myName;
       });
-      partnerNameEls.forEach(el => {
+      document.querySelectorAll(".partner-name").forEach(el => {
         el.textContent = name;
       });
+      partnerReplyName.textContent = name;
       frameTitleText.classList.toggle("custom-title", name !== "Axel");
     }
 
@@ -1237,10 +1287,14 @@
       reader.readAsDataURL(file);
     }
 
-    function appendMessage(text) {
+    function appendMessage(text, sender = "me") {
+      const isPartner = sender === "them";
+      const senderName = isPartner
+        ? partnerNameInput.value.trim() || "Friend"
+        : myNameInput.value.trim() || "Me";
       const message = document.createElement("p");
-      message.className = "message me";
-      message.innerHTML = `<span class="sender my-name">${escapeHtml(myNameInput.value.trim() || "Me")}</span> says:<br><span class="message-text">${renderMessageText(text)}</span>`;
+      message.className = `message ${sender}`;
+      message.innerHTML = `<span class="sender ${isPartner ? "partner-name" : "my-name"}">${escapeHtml(senderName)}</span> says:<br><span class="message-text">${renderMessageText(text)}</span>`;
       conversationLog.appendChild(message);
       conversationLog.scrollTop = conversationLog.scrollHeight;
     }
@@ -1297,6 +1351,15 @@
       appendMessage(text);
       messageInput.value = "";
       messageInput.focus();
+    });
+
+    partnerChatForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const text = partnerMessageInput.value.trim();
+      if (!text) return;
+      appendMessage(text, "them");
+      partnerMessageInput.value = "";
+      partnerMessageInput.focus();
     });
 
     messageInput.addEventListener("keydown", event => {
