@@ -1208,8 +1208,19 @@
     const messageInput = document.getElementById("messageInput");
     const conversationLog = document.getElementById("conversationLog");
     const clock = document.getElementById("clock");
+    const signinSound = new Audio("audio/msn-login.m4a");
+    const messageSound = new Audio("audio/msn-message.m4a");
+    signinSound.preload = "auto";
+    messageSound.preload = "auto";
     let topZ = 20;
     let toastTimer;
+
+    function playNotification(sound) {
+      sound.currentTime = 0;
+      sound.play().catch(() => {
+        // Browsers can block audio until the user has interacted with the page.
+      });
+    }
 
     function bringToFront(windowEl) {
       windows.forEach(item => item.classList.remove("active"));
@@ -1255,6 +1266,7 @@
 
     function triggerSigninToast() {
       toastName.textContent = signinName.value.trim() || "Someone";
+      playNotification(signinSound);
       toast.classList.remove("show");
       clearTimeout(toastTimer);
       requestAnimationFrame(() => {
@@ -1358,6 +1370,7 @@
       const text = partnerMessageInput.value.trim();
       if (!text) return;
       appendMessage(text, "them");
+      playNotification(messageSound);
       partnerMessageInput.value = "";
       partnerMessageInput.focus();
     });
