@@ -1,0 +1,1042 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Windows XP MSN Messenger Mockup</title>
+  <style>
+    :root {
+      --xp-blue: #245edb;
+      --xp-blue-dark: #0d3ca5;
+      --xp-blue-light: #5da5ff;
+      --window-border: #2b65ce;
+      --msn-green: #36a933;
+      --msn-orange: #f2a313;
+      --taskbar-height: 38px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      width: 100%;
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      font-family: Tahoma, "Segoe UI", Arial, sans-serif;
+      font-size: 12px;
+      color: #1a1a1a;
+      user-select: none;
+    }
+
+    body {
+      background: url("reference/windows-wallpaper.jpeg") center center / cover no-repeat fixed;
+    }
+
+    .desktop {
+      position: relative;
+      width: 100vw;
+      height: calc(100vh - var(--taskbar-height));
+      overflow: hidden;
+    }
+
+    .desktop-icons {
+      position: absolute;
+      top: 16px;
+      left: 14px;
+      display: grid;
+      gap: 16px;
+      width: 84px;
+      color: white;
+      text-shadow: 1px 1px 2px #00357d;
+      z-index: 2;
+    }
+
+    .desktop-icon {
+      display: grid;
+      justify-items: center;
+      gap: 4px;
+      text-align: center;
+      line-height: 1.1;
+    }
+
+    .desktop-icon .glyph {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border-radius: 4px;
+      border: 1px solid rgba(255,255,255,.65);
+      background: linear-gradient(#fbfdff, #8ec5ff 52%, #2872dc);
+      box-shadow: inset 0 1px rgba(255,255,255,.9), 1px 2px 4px rgba(0,0,0,.25);
+      color: #16499f;
+      font-size: 18px;
+      text-shadow: none;
+    }
+
+    .desktop-controls {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      z-index: 10;
+      width: min(340px, calc(100vw - 36px));
+      padding: 10px;
+      border: 1px solid #6c9eda;
+      border-radius: 6px;
+      background: linear-gradient(#f7fbff, #d4e9ff);
+      box-shadow: inset 0 1px white, 0 4px 14px rgba(0,0,0,.22);
+    }
+
+    .settings-title {
+      margin: 0 0 8px;
+      font-weight: bold;
+      color: #154389;
+    }
+
+    .control-row {
+      display: grid;
+      gap: 4px;
+      margin-top: 8px;
+    }
+
+    label {
+      color: #1f3c68;
+    }
+
+    input,
+    textarea,
+    select,
+    button {
+      font: inherit;
+    }
+
+    input,
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid #7f9db9;
+      background: white;
+      padding: 4px 5px;
+      outline: none;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #316ac5;
+      box-shadow: 0 0 0 1px #b9d7ff inset;
+    }
+
+    .xp-button {
+      min-height: 24px;
+      padding: 3px 10px;
+      border: 1px solid #2f5fb2;
+      border-radius: 3px;
+      color: #082867;
+      background: linear-gradient(#fff, #d7e9ff 50%, #a6c8f5 51%, #edf6ff);
+      box-shadow: inset 1px 1px white;
+      cursor: pointer;
+    }
+
+    .xp-button:active {
+      background: linear-gradient(#9dbde8, #d7e9ff);
+      padding-top: 4px;
+    }
+
+    .window {
+      position: absolute;
+      z-index: 5;
+      border: 1px solid #1957ba;
+      border-radius: 6px 6px 3px 3px;
+      background: #e7f1ff;
+      box-shadow: 0 5px 18px rgba(0,0,0,.34);
+      overflow: hidden;
+      min-width: 260px;
+    }
+
+    .window.active {
+      z-index: 20;
+    }
+
+    .titlebar {
+      height: 28px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 6px 0 8px;
+      color: white;
+      font-weight: bold;
+      cursor: move;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.6), transparent 43%),
+        linear-gradient(90deg, #1553c7, #5dadff 55%, #1e62cc);
+      text-shadow: 1px 1px #0d357a;
+    }
+
+    .title-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      background:
+        radial-gradient(circle at 52% 35%, #fff 0 13%, transparent 14%),
+        radial-gradient(circle at 35% 68%, #66bcff 0 19%, transparent 20%),
+        radial-gradient(circle at 68% 68%, #7ad95c 0 19%, transparent 20%),
+        linear-gradient(#f7d348, #f1941d);
+      box-shadow: 0 0 0 1px rgba(0,0,0,.18);
+      flex: 0 0 auto;
+    }
+
+    .title {
+      flex: 1;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .window-buttons {
+      display: flex;
+      gap: 3px;
+    }
+
+    .window-button {
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border: 1px solid rgba(255,255,255,.75);
+      border-radius: 3px;
+      color: white;
+      background: linear-gradient(#8bc3ff, #2166d7);
+      box-shadow: inset 0 1px rgba(255,255,255,.55);
+      line-height: 1;
+      font-weight: bold;
+    }
+
+    .window-button.close {
+      background: linear-gradient(#ffb59a, #df3b18);
+    }
+
+    .window-body {
+      border-top: 1px solid #b9d8ff;
+      background: linear-gradient(#f7fbff, #d9ebff);
+    }
+
+    .messenger {
+      left: 110px;
+      top: 74px;
+      width: 315px;
+      height: min(568px, calc(100vh - 116px));
+    }
+
+    .messenger .window-body {
+      height: calc(100% - 28px);
+    }
+
+    .msn-profile {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 8px;
+      padding: 9px;
+      border-bottom: 1px solid #b9d3f1;
+      background: linear-gradient(#f9fdff, #cfe4fb);
+    }
+
+    .avatar {
+      width: 46px;
+      height: 46px;
+      border: 1px solid #8aa7c7;
+      background:
+        radial-gradient(circle at 50% 34%, #f6d0a5 0 19%, transparent 20%),
+        radial-gradient(ellipse at 50% 89%, #586f8c 0 33%, transparent 34%),
+        linear-gradient(#eaf4ff, #b0cfed);
+      box-shadow: inset 0 0 0 2px white;
+    }
+
+    .display-name {
+      font-weight: bold;
+      color: #143e83;
+      margin-bottom: 4px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .status-select {
+      max-width: 136px;
+      padding-left: 20px;
+      background:
+        radial-gradient(circle at 10px 50%, #35c238 0 4px, #148819 5px, transparent 6px),
+        white;
+    }
+
+    .tabs {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      padding: 5px 8px;
+      border-bottom: 1px solid #b7d1ec;
+      background: #eaf5ff;
+    }
+
+    .tab {
+      padding: 3px 8px;
+      border: 1px solid #a5c1e0;
+      border-bottom-color: #7da9dc;
+      border-radius: 3px;
+      background: linear-gradient(#fff, #d9ecff);
+      color: #164c95;
+      font-weight: bold;
+    }
+
+    .contact-pane {
+      height: calc(100% - 119px);
+      margin: 8px;
+      border: 1px solid #95b5da;
+      background: white;
+      overflow-y: auto;
+    }
+
+    .group-title {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 5px 7px;
+      border-bottom: 1px solid #c7d8eb;
+      background: linear-gradient(#f9fcff, #d6e9ff);
+      color: #143e83;
+      font-weight: bold;
+    }
+
+    .contact {
+      display: grid;
+      grid-template-columns: 25px 1fr;
+      gap: 6px;
+      padding: 5px 7px;
+      min-height: 42px;
+      border-bottom: 1px solid #edf2f9;
+    }
+
+    .contact:hover {
+      background: #e9f3ff;
+    }
+
+    .buddy-icon {
+      position: relative;
+      width: 22px;
+      height: 22px;
+      margin-top: 3px;
+      border-radius: 50%;
+      background:
+        radial-gradient(circle at 50% 28%, #fff 0 17%, transparent 18%),
+        radial-gradient(ellipse at 50% 78%, currentColor 0 43%, transparent 44%);
+      color: #32b139;
+      filter: drop-shadow(0 1px 0 #fff);
+    }
+
+    .buddy-icon.busy {
+      color: #d34a3a;
+    }
+
+    .buddy-icon.away {
+      color: #eba316;
+    }
+
+    .buddy-icon.offline {
+      color: #989898;
+    }
+
+    .contact-name {
+      color: #163b78;
+      font-weight: bold;
+      line-height: 1.25;
+    }
+
+    .contact-status {
+      color: #666;
+      font-size: 11px;
+      line-height: 1.2;
+    }
+
+    .chat {
+      left: 455px;
+      top: 86px;
+      width: 390px;
+      height: min(502px, calc(100vh - 128px));
+    }
+
+    .menu-bar {
+      display: flex;
+      gap: 12px;
+      padding: 3px 8px;
+      border-bottom: 1px solid #adcbea;
+      background: #f8fbff;
+      font-size: 11px;
+    }
+
+    .chat-toolbar {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
+      border-bottom: 1px solid #b6d1ed;
+      background: linear-gradient(#eef8ff, #d7ebff);
+      color: #164c95;
+    }
+
+    .tool {
+      display: grid;
+      justify-items: center;
+      gap: 2px;
+      min-width: 42px;
+      font-size: 10px;
+    }
+
+    .tool-icon {
+      width: 22px;
+      height: 20px;
+      border-radius: 5px;
+      background: linear-gradient(#fff, #acd7ff 50%, #2c79d8);
+      box-shadow: inset 0 1px white, 0 1px 1px rgba(0,0,0,.18);
+    }
+
+    .chat-body {
+      height: calc(100% - 29px);
+      display: grid;
+      grid-template-rows: auto auto auto 1fr auto auto;
+      background: #e5f2ff;
+    }
+
+    .chat-partner-strip {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 9px;
+      border-bottom: 1px solid #b6d1ed;
+      color: #154389;
+      font-weight: bold;
+      background: linear-gradient(#fff, #d7eaff);
+    }
+
+    .presence-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 1px solid #147b18;
+      background: radial-gradient(circle at 35% 28%, #caffc8 0 22%, #32c43a 23% 70%, #128216 71%);
+    }
+
+    .conversation-wrap {
+      display: grid;
+      grid-template-columns: 1fr 86px;
+      gap: 7px;
+      min-height: 0;
+      padding: 8px;
+    }
+
+    .conversation-log {
+      min-height: 0;
+      padding: 8px;
+      border: 1px solid #91b1d6;
+      background: white;
+      overflow-y: auto;
+      user-select: text;
+    }
+
+    .message {
+      margin: 0 0 7px;
+      line-height: 1.35;
+    }
+
+    .message .sender {
+      font-weight: bold;
+    }
+
+    .message.me {
+      color: #1d4fa3;
+    }
+
+    .message.them {
+      color: #c1382d;
+    }
+
+    .side-panel {
+      display: grid;
+      gap: 8px;
+      align-content: start;
+    }
+
+    .display-pic {
+      width: 76px;
+      height: 76px;
+      border: 1px solid #8aa7c7;
+      background:
+        radial-gradient(circle at 51% 34%, #ffd7b6 0 17%, transparent 18%),
+        radial-gradient(ellipse at 51% 87%, #864343 0 36%, transparent 37%),
+        linear-gradient(135deg, #fff5e8, #c3d6ec);
+      box-shadow: inset 0 0 0 3px white;
+    }
+
+    .display-pic.me {
+      background:
+        radial-gradient(circle at 50% 34%, #ecc298 0 17%, transparent 18%),
+        radial-gradient(ellipse at 50% 87%, #546d87 0 36%, transparent 37%),
+        linear-gradient(135deg, #eaf7ff, #b9d5ee);
+    }
+
+    .compose {
+      display: grid;
+      grid-template-columns: 1fr 64px;
+      gap: 7px;
+      padding: 0 8px 8px;
+    }
+
+    .message-input {
+      min-height: 66px;
+      resize: none;
+    }
+
+    .send-button {
+      align-self: end;
+      height: 34px;
+    }
+
+    .format-bar {
+      margin: 0 8px;
+      padding: 4px 6px;
+      border: 1px solid #a8c5e7;
+      border-bottom: none;
+      background: linear-gradient(#fefefe, #d8ebff);
+      color: #244e92;
+      font-size: 11px;
+    }
+
+    .toast {
+      position: fixed;
+      right: 12px;
+      bottom: calc(var(--taskbar-height) - 4px);
+      z-index: 80;
+      width: min(308px, calc(100vw - 24px));
+      border: 1px solid #6e9ed2;
+      border-top: none;
+      border-radius: 8px 8px 2px 2px;
+      background: linear-gradient(110deg, #c9e8ff 0%, #f9fdff 62%, #fff 100%);
+      box-shadow: 0 4px 15px rgba(0,0,0,.32), inset 0 1px rgba(255,255,255,.8);
+      transform: translateY(120%);
+      transition: transform 520ms cubic-bezier(.19, .9, .29, 1.04);
+      overflow: hidden;
+    }
+
+    .toast.show {
+      transform: translateY(0);
+    }
+
+    .toast-accent {
+      height: 8px;
+      background: linear-gradient(90deg, #f6b43b, #f2db77 55%, #dc8612);
+      border-bottom: 1px solid rgba(146,92,8,.35);
+    }
+
+    .toast-content {
+      display: grid;
+      grid-template-columns: 38px 1fr;
+      gap: 8px;
+      padding: 10px 11px 12px;
+      align-items: center;
+    }
+
+    .toast-logo {
+      width: 34px;
+      height: 34px;
+      border-radius: 7px;
+      background:
+        radial-gradient(circle at 45% 30%, #fff 0 10%, transparent 11%),
+        radial-gradient(circle at 31% 67%, #63b5ff 0 17%, transparent 18%),
+        radial-gradient(circle at 68% 67%, #7bd157 0 17%, transparent 18%),
+        linear-gradient(#ffdd52, #ee8f21);
+      box-shadow: inset 0 1px rgba(255,255,255,.8), 0 1px 2px rgba(0,0,0,.2);
+    }
+
+    .toast-title {
+      margin-bottom: 3px;
+      color: #13438b;
+      font-weight: bold;
+    }
+
+    .toast-message {
+      color: #343434;
+    }
+
+    .taskbar {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 100;
+      height: var(--taskbar-height);
+      display: grid;
+      grid-template-columns: auto 1fr auto;
+      align-items: stretch;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.45), transparent 22%),
+        linear-gradient(180deg, #2a78f4 0%, #0f56d9 46%, #0847bd 47%, #0a58d6 100%);
+      box-shadow: inset 0 1px #71b5ff;
+    }
+
+    .start-button {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      min-width: 92px;
+      height: 100%;
+      padding: 0 16px 0 10px;
+      border: 0;
+      border-radius: 0 16px 16px 0;
+      color: white;
+      font-size: 15px;
+      font-weight: bold;
+      font-style: italic;
+      text-shadow: 1px 1px 2px #13410a;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.48), transparent 34%),
+        linear-gradient(180deg, #58c348 0%, #219b22 46%, #168018 47%, #35b331 100%);
+      box-shadow: inset -1px 0 rgba(255,255,255,.32), 2px 0 5px rgba(0,0,0,.25);
+      cursor: pointer;
+    }
+
+    .start-orb {
+      display: grid;
+      place-items: center;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: radial-gradient(circle at 35% 32%, #fff 0 12%, #ffd85b 13% 33%, #db6717 34% 70%, #a6370a 71%);
+      font-style: normal;
+      font-size: 10px;
+    }
+
+    .task-buttons {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      min-width: 0;
+      padding: 4px 8px;
+    }
+
+    .task-button {
+      width: min(185px, 30vw);
+      height: 29px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 0 9px;
+      border: 1px solid rgba(0,34,119,.45);
+      border-radius: 3px;
+      color: white;
+      background: linear-gradient(#4da0ff, #1a64d8 50%, #0d53c7 51%, #327beb);
+      box-shadow: inset 1px 1px rgba(255,255,255,.45);
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    .task-button.active {
+      background: linear-gradient(#255ab7, #0b3fa4);
+      box-shadow: inset 1px 1px rgba(0,0,0,.35);
+    }
+
+    .tray {
+      display: flex;
+      align-items: center;
+      gap: 7px;
+      padding: 0 11px;
+      color: white;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.35), transparent 32%),
+        linear-gradient(180deg, #19a6f4, #0a77d3);
+      box-shadow: inset 1px 0 rgba(255,255,255,.45);
+      text-shadow: 1px 1px #075292;
+    }
+
+    .tray-icon {
+      width: 16px;
+      height: 16px;
+      border-radius: 3px;
+      background: linear-gradient(#fff, #9de7ff 45%, #187ad9);
+      box-shadow: inset 0 1px rgba(255,255,255,.9), 0 1px 1px rgba(0,0,0,.22);
+    }
+
+    .clock {
+      min-width: 48px;
+      text-align: right;
+    }
+
+    @media (max-width: 760px) {
+      .desktop {
+        overflow: auto;
+      }
+
+      .desktop-controls {
+        left: 10px;
+        right: 10px;
+        top: 10px;
+        width: auto;
+      }
+
+      .messenger {
+        left: 10px;
+        top: 155px;
+        width: calc(100vw - 20px);
+        height: 390px;
+      }
+
+      .chat {
+        left: 10px;
+        top: 560px;
+        width: calc(100vw - 20px);
+        height: 450px;
+      }
+
+      .desktop-icons {
+        display: none;
+      }
+
+      .task-button {
+        width: 34vw;
+        padding-inline: 6px;
+      }
+
+      .conversation-wrap {
+        grid-template-columns: 1fr;
+      }
+
+      .side-panel {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="desktop" aria-label="Windows XP desktop">
+    <section class="desktop-icons" aria-label="Desktop icons">
+      <div class="desktop-icon">
+        <div class="glyph">✉</div>
+        <span>MSN Mail</span>
+      </div>
+      <div class="desktop-icon">
+        <div class="glyph">ⓘ</div>
+        <span>Internet</span>
+      </div>
+      <div class="desktop-icon">
+        <div class="glyph">♬</div>
+        <span>Music</span>
+      </div>
+    </section>
+
+    <section class="desktop-controls" aria-label="Messenger settings">
+      <p class="settings-title">MSN Messenger Settings</p>
+      <div class="control-row">
+        <label for="signinName">Change Sign-in Username</label>
+        <input id="signinName" value="Jessie" autocomplete="off">
+      </div>
+      <div class="control-row">
+        <button class="xp-button" id="triggerToast" type="button">Trigger Sign-in</button>
+      </div>
+      <div class="control-row">
+        <label for="partnerNameInput">Change Active Chat Partner Name</label>
+        <input id="partnerNameInput" value="Jordan" autocomplete="off">
+      </div>
+    </section>
+
+    <section class="window messenger active" data-window="messenger" aria-label="MSN Messenger contact list">
+      <header class="titlebar">
+        <span class="title-icon"></span>
+        <span class="title">MSN Messenger</span>
+        <span class="window-buttons" aria-hidden="true">
+          <span class="window-button">_</span>
+          <span class="window-button">□</span>
+          <span class="window-button close">×</span>
+        </span>
+      </header>
+      <div class="window-body">
+        <div class="msn-profile">
+          <div class="avatar"></div>
+          <div>
+            <div class="display-name">Alex <span style="font-weight:normal;">(Away)</span></div>
+            <select class="status-select" aria-label="Current status">
+              <option>Online</option>
+              <option>Away</option>
+              <option>Busy</option>
+              <option>Appear Offline</option>
+            </select>
+          </div>
+        </div>
+        <div class="tabs">
+          <span class="tab">Contacts</span>
+          <span class="tab">MSN Today</span>
+        </div>
+        <div class="contact-pane">
+          <div class="group-title">▾ Friends (3/7)</div>
+          <div class="contact">
+            <span class="buddy-icon"></span>
+            <div>
+              <div class="contact-name">Jordan</div>
+              <div class="contact-status">still not ready because his hair status is set to Away...</div>
+            </div>
+          </div>
+          <div class="contact">
+            <span class="buddy-icon away"></span>
+            <div>
+              <div class="contact-name">Maya</div>
+              <div class="contact-status">brb, downloading a new display picture</div>
+            </div>
+          </div>
+          <div class="contact">
+            <span class="buddy-icon busy"></span>
+            <div>
+              <div class="contact-name">Chris</div>
+              <div class="contact-status">Busy - making a playlist on Windows Media Player</div>
+            </div>
+          </div>
+          <div class="contact">
+            <span class="buddy-icon offline"></span>
+            <div>
+              <div class="contact-name">Sam (Offline)</div>
+              <div class="contact-status">last seen yesterday after school</div>
+            </div>
+          </div>
+          <div class="contact">
+            <span class="buddy-icon offline"></span>
+            <div>
+              <div class="contact-name">Nina (Offline)</div>
+              <div class="contact-status">gone to dinner</div>
+            </div>
+          </div>
+          <div class="contact">
+            <span class="buddy-icon offline"></span>
+            <div>
+              <div class="contact-name">Taylor (Offline)</div>
+              <div class="contact-status">listening to: Cascada - Everytime We Touch</div>
+            </div>
+          </div>
+          <div class="contact">
+            <span class="buddy-icon offline"></span>
+            <div>
+              <div class="contact-name">Priya (Offline)</div>
+              <div class="contact-status">call me on the house phone</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="window chat" data-window="chat" aria-label="MSN Messenger chat window">
+      <header class="titlebar">
+        <span class="title-icon"></span>
+        <span class="title"><span class="partner-name">Jordan</span> - Conversation</span>
+        <span class="window-buttons" aria-hidden="true">
+          <span class="window-button">_</span>
+          <span class="window-button">□</span>
+          <span class="window-button close">×</span>
+        </span>
+      </header>
+      <div class="chat-body">
+        <nav class="menu-bar" aria-label="Conversation menu">
+          <span>File</span>
+          <span>Edit</span>
+          <span>Actions</span>
+          <span>Tools</span>
+          <span>Help</span>
+        </nav>
+        <div class="chat-toolbar">
+          <span class="tool"><span class="tool-icon"></span>Invite</span>
+          <span class="tool"><span class="tool-icon"></span>Send Files</span>
+          <span class="tool"><span class="tool-icon"></span>Webcam</span>
+          <span class="tool"><span class="tool-icon"></span>Audio</span>
+          <span class="tool"><span class="tool-icon"></span>Games</span>
+        </div>
+        <div class="chat-partner-strip">
+          <span class="presence-dot"></span>
+          <span class="partner-name">Jordan</span>
+          <span style="font-weight:normal;">says:</span>
+        </div>
+        <div class="conversation-wrap">
+          <div class="conversation-log" id="conversationLog" aria-live="polite">
+            <p class="message them"><span class="sender partner-name">Jordan</span> says:<br>still not ready because his hair status is set to Away.</p>
+            <p class="message me"><span class="sender">Alex</span> says:<br>classic. want me to nudge you?</p>
+          </div>
+          <aside class="side-panel" aria-label="Display pictures">
+            <div class="display-pic"></div>
+            <div class="display-pic me"></div>
+          </aside>
+        </div>
+        <div class="format-bar">Font · ☺ · Wink · Background · Buzz</div>
+        <form class="compose" id="chatForm">
+          <textarea class="message-input" id="messageInput" aria-label="Type a message"></textarea>
+          <button class="xp-button send-button" type="submit">Send</button>
+        </form>
+      </div>
+    </section>
+
+    <aside class="toast" id="signinToast" aria-live="polite">
+      <div class="toast-accent"></div>
+      <div class="toast-content">
+        <div class="toast-logo"></div>
+        <div>
+          <div class="toast-title">MSN Messenger</div>
+          <div class="toast-message"><span id="toastName">Jessie</span> has just signed in.</div>
+        </div>
+      </div>
+    </aside>
+  </main>
+
+  <footer class="taskbar" aria-label="Windows XP taskbar">
+    <button class="start-button" type="button"><span class="start-orb">◆</span>start</button>
+    <div class="task-buttons">
+      <button class="task-button active" type="button"><span class="title-icon"></span>MSN Messenger</button>
+      <button class="task-button" type="button"><span class="title-icon"></span><span class="partner-name">Jordan</span> - Conversation</button>
+    </div>
+    <div class="tray">
+      <span class="tray-icon"></span>
+      <span class="tray-icon"></span>
+      <span class="tray-icon"></span>
+      <span class="clock" id="clock">--:--</span>
+    </div>
+  </footer>
+
+  <script>
+    const windows = [...document.querySelectorAll(".window")];
+    const toast = document.getElementById("signinToast");
+    const toastName = document.getElementById("toastName");
+    const signinName = document.getElementById("signinName");
+    const triggerToast = document.getElementById("triggerToast");
+    const partnerNameInput = document.getElementById("partnerNameInput");
+    const partnerNameEls = [...document.querySelectorAll(".partner-name")];
+    const chatForm = document.getElementById("chatForm");
+    const messageInput = document.getElementById("messageInput");
+    const conversationLog = document.getElementById("conversationLog");
+    const clock = document.getElementById("clock");
+    let topZ = 20;
+    let toastTimer;
+
+    function bringToFront(windowEl) {
+      windows.forEach(item => item.classList.remove("active"));
+      windowEl.classList.add("active");
+      windowEl.style.zIndex = String(++topZ);
+    }
+
+    function makeDraggable(windowEl) {
+      const handle = windowEl.querySelector(".titlebar");
+      let pointerId = null;
+      let startX = 0;
+      let startY = 0;
+      let initialLeft = 0;
+      let initialTop = 0;
+
+      handle.addEventListener("pointerdown", event => {
+        pointerId = event.pointerId;
+        bringToFront(windowEl);
+        handle.setPointerCapture(pointerId);
+        startX = event.clientX;
+        startY = event.clientY;
+        initialLeft = windowEl.offsetLeft;
+        initialTop = windowEl.offsetTop;
+      });
+
+      handle.addEventListener("pointermove", event => {
+        if (pointerId !== event.pointerId) return;
+        const desktop = document.querySelector(".desktop");
+        const nextLeft = initialLeft + event.clientX - startX;
+        const nextTop = initialTop + event.clientY - startY;
+        const maxLeft = desktop.clientWidth - windowEl.offsetWidth;
+        const maxTop = desktop.scrollHeight - windowEl.offsetHeight;
+        windowEl.style.left = `${Math.max(0, Math.min(nextLeft, maxLeft))}px`;
+        windowEl.style.top = `${Math.max(0, Math.min(nextTop, maxTop))}px`;
+      });
+
+      handle.addEventListener("pointerup", event => {
+        if (pointerId === event.pointerId) {
+          pointerId = null;
+        }
+      });
+    }
+
+    function triggerSigninToast() {
+      toastName.textContent = signinName.value.trim() || "Someone";
+      toast.classList.remove("show");
+      clearTimeout(toastTimer);
+      requestAnimationFrame(() => {
+        requestAnimationFrame(() => toast.classList.add("show"));
+      });
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 5200);
+    }
+
+    function updatePartnerName() {
+      const name = partnerNameInput.value.trim() || "Friend";
+      partnerNameEls.forEach(el => {
+        el.textContent = name;
+      });
+    }
+
+    function appendMessage(text) {
+      const message = document.createElement("p");
+      message.className = "message me";
+      message.innerHTML = `<span class="sender">Alex</span> says:<br>${escapeHtml(text)}`;
+      conversationLog.appendChild(message);
+      conversationLog.scrollTop = conversationLog.scrollHeight;
+    }
+
+    function escapeHtml(value) {
+      return value.replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#039;"
+      })[char]);
+    }
+
+    function updateClock() {
+      const now = new Date();
+      clock.textContent = now.toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit"
+      });
+    }
+
+    windows.forEach(windowEl => {
+      makeDraggable(windowEl);
+      windowEl.addEventListener("pointerdown", () => bringToFront(windowEl));
+    });
+
+    signinName.addEventListener("input", () => {
+      toastName.textContent = signinName.value.trim() || "Someone";
+    });
+
+    triggerToast.addEventListener("click", triggerSigninToast);
+    partnerNameInput.addEventListener("input", updatePartnerName);
+
+    chatForm.addEventListener("submit", event => {
+      event.preventDefault();
+      const text = messageInput.value.trim();
+      if (!text) return;
+      appendMessage(text);
+      messageInput.value = "";
+      messageInput.focus();
+    });
+
+    messageInput.addEventListener("keydown", event => {
+      if (event.key === "Enter" && !event.shiftKey) {
+        event.preventDefault();
+        chatForm.requestSubmit();
+      }
+    });
+
+    updatePartnerName();
+    updateClock();
+    setInterval(updateClock, 1000);
+    setTimeout(triggerSigninToast, 700);
+  </script>
+</body>
+</html>
