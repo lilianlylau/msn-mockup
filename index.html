@@ -972,6 +972,21 @@
       margin: 0;
     }
 
+    .chat.image-frame .frame-compose::after {
+      content: "";
+      position: absolute;
+      left: 434px;
+      top: -1px;
+      z-index: 2;
+      width: 48px;
+      height: 57px;
+      border: 1px solid #8ca2b8;
+      border-radius: 2px;
+      background: url("reference/send-replacement.jpeg") center / 100% 100% no-repeat;
+      box-shadow: 0 0 0 1px rgba(255, 255, 255, .7) inset;
+      pointer-events: none;
+    }
+
     .chat.image-frame .message-input {
       position: absolute;
       left: 0;
@@ -989,8 +1004,9 @@
 
     .chat.image-frame .send-hit-area {
       position: absolute;
-      left: 439px;
-      top: 2px;
+      left: 435px;
+      top: 0;
+      z-index: 3;
       width: 47px;
       height: 29px;
       padding: 0;
