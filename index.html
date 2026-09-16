@@ -101,6 +101,17 @@
       margin-top: 8px;
     }
 
+    .control-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+
+    .file-control {
+      padding: 3px;
+      font-size: 11px;
+    }
+
     label {
       color: #1f3c68;
     }
@@ -361,92 +372,112 @@
 
     .chat {
       left: 455px;
-      top: 86px;
-      width: 390px;
-      height: min(502px, calc(100vh - 128px));
+      top: 54px;
+      width: 625px;
+      height: 579px;
+      min-width: 520px;
+      border-color: #195bbd;
+      border-radius: 5px 5px 11px 11px;
+      background: #e8f2ff;
     }
 
     .menu-bar {
       display: flex;
       gap: 12px;
-      padding: 3px 8px;
+      height: 20px;
+      padding: 2px 5px;
       border-bottom: 1px solid #adcbea;
       background: #f8fbff;
       font-size: 11px;
+      color: #111;
     }
 
     .chat-toolbar {
       display: flex;
       align-items: center;
-      gap: 8px;
-      padding: 6px 8px;
+      gap: 2px;
+      height: 58px;
+      padding: 3px 8px 1px;
       border-bottom: 1px solid #b6d1ed;
-      background: linear-gradient(#eef8ff, #d7ebff);
-      color: #164c95;
+      background: linear-gradient(#fbfdff 0%, #e3edfb 52%, #d6e3f6 100%);
+      color: #202020;
     }
 
     .tool {
       display: grid;
       justify-items: center;
-      gap: 2px;
-      min-width: 42px;
+      align-content: start;
+      gap: 0;
+      min-width: 48px;
+      height: 51px;
       font-size: 10px;
+      white-space: nowrap;
     }
 
     .tool-icon {
-      width: 22px;
-      height: 20px;
-      border-radius: 5px;
-      background: linear-gradient(#fff, #acd7ff 50%, #2c79d8);
-      box-shadow: inset 0 1px white, 0 1px 1px rgba(0,0,0,.18);
+      width: 40px;
+      height: 34px;
+      background-image: url("reference/msn-message-chat.jpeg");
+      background-repeat: no-repeat;
+      background-size: 625px 579px;
+    }
+
+    .tool-icon.invite { background-position: -17px -42px; }
+    .tool-icon.files { background-position: -64px -42px; }
+    .tool-icon.video { background-position: -111px -42px; }
+    .tool-icon.voice { background-position: -153px -42px; }
+    .tool-icon.activities { background-position: -193px -42px; }
+    .tool-icon.games { background-position: -233px -42px; }
+
+    .toolbar-spacer {
+      flex: 1;
+    }
+
+    .msn-wordmark {
+      align-self: start;
+      margin: 3px 18px 0 0;
+      color: #183762;
+      font: italic bold 15px Arial, sans-serif;
     }
 
     .chat-body {
       height: calc(100% - 29px);
       display: grid;
-      grid-template-rows: auto auto auto 1fr auto auto;
-      background: #e5f2ff;
-    }
-
-    .chat-partner-strip {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 9px;
-      border-bottom: 1px solid #b6d1ed;
-      color: #154389;
-      font-weight: bold;
-      background: linear-gradient(#fff, #d7eaff);
-    }
-
-    .presence-dot {
-      width: 12px;
-      height: 12px;
-      border-radius: 50%;
-      border: 1px solid #147b18;
-      background: radial-gradient(circle at 35% 28%, #caffc8 0 22%, #32c43a 23% 70%, #128216 71%);
+      grid-template-rows: 20px 58px 1fr 21px;
+      background: linear-gradient(120deg, #f7fbff 0 80%, #dce9fa 80% 100%);
     }
 
     .conversation-wrap {
       display: grid;
-      grid-template-columns: 1fr 86px;
-      gap: 7px;
+      grid-template-columns: minmax(0, 1fr) 103px;
+      grid-template-rows: minmax(0, 1fr) 88px;
+      gap: 7px 8px;
       min-height: 0;
-      padding: 8px;
+      padding: 6px 9px 5px 10px;
     }
 
     .conversation-log {
       min-height: 0;
-      padding: 8px;
-      border: 1px solid #91b1d6;
+      padding: 7px 5px;
+      border: 1px solid #7695b9;
       background: white;
       overflow-y: auto;
       user-select: text;
+      outline: none;
+      line-height: 1.25;
+    }
+
+    .conversation-address {
+      margin: -7px -5px 6px;
+      padding: 4px 5px;
+      border-bottom: 1px solid #9aafc5;
+      color: #24384c;
+      background: linear-gradient(#fff, #f4f7fa);
     }
 
     .message {
-      margin: 0 0 7px;
-      line-height: 1.35;
+      margin: 0 0 5px;
+      line-height: 1.22;
     }
 
     .message .sender {
@@ -454,62 +485,104 @@
     }
 
     .message.me {
-      color: #1d4fa3;
+      color: #111;
     }
 
     .message.them {
-      color: #c1382d;
+      color: #111;
+    }
+
+    .message.me .message-text {
+      color: #588262;
+    }
+
+    .message.them .message-text {
+      color: #173b70;
+      font-weight: normal;
     }
 
     .side-panel {
       display: grid;
-      gap: 8px;
-      align-content: start;
+      grid-row: 1 / span 2;
+      grid-column: 2;
+      align-content: space-between;
     }
 
     .display-pic {
-      width: 76px;
-      height: 76px;
-      border: 1px solid #8aa7c7;
-      background:
-        radial-gradient(circle at 51% 34%, #ffd7b6 0 17%, transparent 18%),
-        radial-gradient(ellipse at 51% 87%, #864343 0 36%, transparent 37%),
-        linear-gradient(135deg, #fff5e8, #c3d6ec);
-      box-shadow: inset 0 0 0 3px white;
+      width: 98px;
+      height: 104px;
+      padding: 6px 8px 14px 6px;
+      border: 1px solid #758ea9;
+      border-radius: 9px;
+      background: linear-gradient(#fff, #e9eef4);
+      box-shadow: inset 0 0 0 2px #eef4fa, 2px 2px 0 #c7d4e2;
     }
 
-    .display-pic.me {
-      background:
-        radial-gradient(circle at 50% 34%, #ecc298 0 17%, transparent 18%),
-        radial-gradient(ellipse at 50% 87%, #546d87 0 36%, transparent 37%),
-        linear-gradient(135deg, #eaf7ff, #b9d5ee);
+    .display-pic::after {
+      content: "";
+      display: block;
+      width: 100%;
+      height: 100%;
+      border: 1px solid #556d86;
+      background-image: url("reference/msn-message-chat.jpeg");
+      background-repeat: no-repeat;
+      background-size: 625px 579px;
+    }
+
+    .display-pic.them::after { background-position: -513px -101px; }
+    .display-pic.me::after { background-position: -513px -447px; }
+
+    .display-pic.has-photo::after {
+      background-image: var(--photo);
+      background-position: center;
+      background-size: cover;
     }
 
     .compose {
       display: grid;
-      grid-template-columns: 1fr 64px;
-      gap: 7px;
-      padding: 0 8px 8px;
+      grid-template-columns: 1fr 47px;
+      gap: 5px;
+      grid-column: 1;
+      grid-row: 2;
+      padding: 24px 0 0;
+    }
+
+    .compose-shell {
+      grid-column: 1;
+      grid-row: 2;
     }
 
     .message-input {
-      min-height: 66px;
+      min-height: 64px;
       resize: none;
+      border-color: #7695b9;
     }
 
     .send-button {
-      align-self: end;
-      height: 34px;
+      align-self: start;
+      height: 27px;
+      margin-top: 5px;
+      padding: 2px 4px;
+      color: #6d8093;
     }
 
     .format-bar {
-      margin: 0 8px;
-      padding: 4px 6px;
-      border: 1px solid #a8c5e7;
-      border-bottom: none;
-      background: linear-gradient(#fefefe, #d8ebff);
-      color: #244e92;
+      height: 24px;
+      margin: 0;
+      padding: 2px 7px;
+      border: 1px solid #7695b9;
+      border-bottom: 0;
+      background: linear-gradient(#fff, #dce9f7);
+      color: #172e51;
       font-size: 11px;
+    }
+
+    .chat-status {
+      margin: 0 9px 4px 10px;
+      padding: 3px 4px 0;
+      border-top: 1px solid #adc2dc;
+      color: #3e536c;
+      font-size: 10px;
     }
 
     .toast {
@@ -693,9 +766,10 @@
 
       .chat {
         left: 10px;
-        top: 560px;
+        top: 635px;
         width: calc(100vw - 20px);
-        height: 450px;
+        min-width: 0;
+        height: min(579px, calc(100vh - 20px));
       }
 
       .desktop-icons {
@@ -708,11 +782,158 @@
       }
 
       .conversation-wrap {
-        grid-template-columns: 1fr;
+        grid-template-columns: minmax(0, 1fr);
       }
 
       .side-panel {
         display: none;
+      }
+    }
+
+    /* The supplied MSN screenshot is the chrome; only changing content sits above it. */
+    .chat.image-frame {
+      width: 625px;
+      height: 560px;
+      min-width: 625px;
+      border: 0;
+      border-radius: 0;
+      background: url("reference/msn-message-chat.jpeg") 0 0 / 625px 579px no-repeat;
+      box-shadow: 0 5px 18px rgba(0,0,0,.34);
+      overflow: hidden;
+    }
+
+    .chat.image-frame .frame-titlebar {
+      position: absolute;
+      left: 0;
+      top: 0;
+      z-index: 3;
+      width: 560px;
+      height: 24px;
+      padding: 0;
+      background: transparent;
+      cursor: move;
+    }
+
+    .chat.image-frame .frame-title-text {
+      position: absolute;
+      left: 20px;
+      top: 3px;
+      z-index: 4;
+      display: none;
+      width: 280px;
+      height: 18px;
+      padding: 1px 5px 0 5px;
+      color: white;
+      font-weight: bold;
+      line-height: 17px;
+      text-shadow: 1px 1px #0d357a;
+      background:
+        linear-gradient(180deg, rgba(105, 180, 255, .48) 0%, rgba(105, 180, 255, 0) 34%),
+        linear-gradient(180deg, #1686ed 0%, #0871df 52%, #2864ce 100%);
+    }
+
+    .chat.image-frame .frame-title-text.custom-title {
+      display: block;
+    }
+
+    .chat.image-frame .conversation-log {
+      position: absolute;
+      left: 12px;
+      top: 99px;
+      width: 486px;
+      height: 339px;
+      padding: 7px 5px;
+      border: 0;
+      background: #fff;
+      overflow-y: auto;
+      outline: none;
+      font-size: 11px;
+      line-height: 1.18;
+      user-select: text;
+    }
+
+    .chat.image-frame .conversation-address {
+      margin: -7px -5px 6px;
+      padding: 4px 5px;
+      border-bottom: 1px solid #9aafc5;
+      background: #f7f9fb;
+    }
+
+    .chat.image-frame .message {
+      margin-bottom: 3px;
+    }
+
+    .chat.image-frame .frame-photo {
+      position: absolute;
+      z-index: 2;
+      width: 82px;
+      height: 84px;
+      border: 0;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
+    }
+
+    .chat.image-frame .frame-photo.them {
+      left: 514px;
+      top: 101px;
+    }
+
+    .chat.image-frame .frame-photo.me {
+      left: 514px;
+      top: 447px;
+    }
+
+    .chat.image-frame .frame-photo:not(.has-photo) {
+      display: none;
+    }
+
+    .chat.image-frame .frame-photo.has-photo {
+      display: block;
+      background-image: var(--photo);
+    }
+
+    .chat.image-frame .frame-compose {
+      position: absolute;
+      left: 12px;
+      top: 470px;
+      width: 486px;
+      height: 61px;
+      margin: 0;
+    }
+
+    .chat.image-frame .message-input {
+      position: absolute;
+      left: 0;
+      top: 0;
+      width: 438px;
+      height: 61px;
+      min-height: 0;
+      padding: 5px;
+      resize: none;
+      border: 0;
+      background: #fff;
+      box-shadow: none;
+      outline: none;
+    }
+
+    .chat.image-frame .send-hit-area {
+      position: absolute;
+      left: 439px;
+      top: 2px;
+      width: 47px;
+      height: 29px;
+      padding: 0;
+      border: 0;
+      opacity: 0;
+      cursor: pointer;
+    }
+
+    @media (max-width: 760px) {
+      .chat.image-frame {
+        width: 625px;
+        height: 560px;
+        min-width: 625px;
       }
     }
   </style>
@@ -744,8 +965,28 @@
         <button class="xp-button" id="triggerToast" type="button">Trigger Sign-in</button>
       </div>
       <div class="control-row">
-        <label for="partnerNameInput">Change Active Chat Partner Name</label>
-        <input id="partnerNameInput" value="Jordan" autocomplete="off">
+        <div class="control-grid">
+          <div>
+            <label for="myNameInput">Your chat name</label>
+            <input id="myNameInput" value="Roxas" autocomplete="off">
+          </div>
+          <div>
+            <label for="partnerNameInput">Their chat name</label>
+            <input id="partnerNameInput" value="Axel" autocomplete="off">
+          </div>
+        </div>
+      </div>
+      <div class="control-row">
+        <div class="control-grid">
+          <div>
+            <label for="myPhotoInput">Your photo</label>
+            <input class="file-control" id="myPhotoInput" type="file" accept="image/*">
+          </div>
+          <div>
+            <label for="partnerPhotoInput">Their photo</label>
+            <input class="file-control" id="partnerPhotoInput" type="file" accept="image/*">
+          </div>
+        </div>
       </div>
     </section>
 
@@ -831,52 +1072,24 @@
       </div>
     </section>
 
-    <section class="window chat" data-window="chat" aria-label="MSN Messenger chat window">
-      <header class="titlebar">
-        <span class="title-icon"></span>
-        <span class="title"><span class="partner-name">Jordan</span> - Conversation</span>
-        <span class="window-buttons" aria-hidden="true">
-          <span class="window-button">_</span>
-          <span class="window-button">□</span>
-          <span class="window-button close">×</span>
-        </span>
-      </header>
-      <div class="chat-body">
-        <nav class="menu-bar" aria-label="Conversation menu">
-          <span>File</span>
-          <span>Edit</span>
-          <span>Actions</span>
-          <span>Tools</span>
-          <span>Help</span>
-        </nav>
-        <div class="chat-toolbar">
-          <span class="tool"><span class="tool-icon"></span>Invite</span>
-          <span class="tool"><span class="tool-icon"></span>Send Files</span>
-          <span class="tool"><span class="tool-icon"></span>Webcam</span>
-          <span class="tool"><span class="tool-icon"></span>Audio</span>
-          <span class="tool"><span class="tool-icon"></span>Games</span>
-        </div>
-        <div class="chat-partner-strip">
-          <span class="presence-dot"></span>
-          <span class="partner-name">Jordan</span>
-          <span style="font-weight:normal;">says:</span>
-        </div>
-        <div class="conversation-wrap">
-          <div class="conversation-log" id="conversationLog" aria-live="polite">
-            <p class="message them"><span class="sender partner-name">Jordan</span> says:<br>still not ready because his hair status is set to Away.</p>
-            <p class="message me"><span class="sender">Alex</span> says:<br>classic. want me to nudge you?</p>
-          </div>
-          <aside class="side-panel" aria-label="Display pictures">
-            <div class="display-pic"></div>
-            <div class="display-pic me"></div>
-          </aside>
-        </div>
-        <div class="format-bar">Font · ☺ · Wink · Background · Buzz</div>
-        <form class="compose" id="chatForm">
-          <textarea class="message-input" id="messageInput" aria-label="Type a message"></textarea>
-          <button class="xp-button send-button" type="submit">Send</button>
-        </form>
+    <section class="window chat image-frame" data-window="chat" aria-label="MSN Messenger chat window">
+      <div class="frame-titlebar titlebar" aria-hidden="true"></div>
+      <div class="frame-title-text" id="frameTitleText"><span class="partner-name">Axel</span> - Conversation</div>
+      <div class="conversation-log" id="conversationLog" aria-live="polite" contenteditable="true" spellcheck="true" aria-label="Editable conversation history">
+        <div class="conversation-address">To: <strong class="partner-name">Axel</strong> &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@hotmail.com&gt;</div>
+        <p class="message them"><span class="sender partner-name">Axel</span> says:<br><span class="message-text">Hey</span></p>
+        <p class="message me"><span class="sender my-name">Roxas</span> says:<br><span class="message-text">Hiya</span></p>
+        <p class="message them"><span class="sender partner-name">Axel</span> says:<br><span class="message-text">What are you up to?</span></p>
+        <p class="message me"><span class="sender my-name">Roxas</span> says:<br><span class="message-text">Not much, just chilling out really haha. You?</span></p>
+        <p class="message them"><span class="sender partner-name">Axel</span> says:<br><span class="message-text">Same same.</span></p>
+        <p class="message me"><span class="sender my-name">Roxas</span> says:<br><span class="message-text">I really like you too.</span></p>
       </div>
+      <div class="frame-photo them" id="partnerDisplayPic" aria-label="Their display picture"></div>
+      <div class="frame-photo me" id="myDisplayPic" aria-label="Your display picture"></div>
+      <form class="frame-compose" id="chatForm">
+        <textarea class="message-input" id="messageInput" aria-label="Type a message"></textarea>
+        <button class="send-hit-area" type="submit" aria-label="Send message">Send</button>
+      </form>
     </section>
 
     <aside class="toast" id="signinToast" aria-live="polite">
@@ -895,7 +1108,7 @@
     <button class="start-button" type="button"><span class="start-orb">◆</span>start</button>
     <div class="task-buttons">
       <button class="task-button active" type="button"><span class="title-icon"></span>MSN Messenger</button>
-      <button class="task-button" type="button"><span class="title-icon"></span><span class="partner-name">Jordan</span> - Conversation</button>
+      <button class="task-button" type="button"><span class="title-icon"></span><span class="partner-name">Axel</span> - Conversation</button>
     </div>
     <div class="tray">
       <span class="tray-icon"></span>
@@ -911,8 +1124,15 @@
     const toastName = document.getElementById("toastName");
     const signinName = document.getElementById("signinName");
     const triggerToast = document.getElementById("triggerToast");
+    const myNameInput = document.getElementById("myNameInput");
     const partnerNameInput = document.getElementById("partnerNameInput");
+    const myNameEls = [...document.querySelectorAll(".my-name")];
     const partnerNameEls = [...document.querySelectorAll(".partner-name")];
+    const myPhotoInput = document.getElementById("myPhotoInput");
+    const partnerPhotoInput = document.getElementById("partnerPhotoInput");
+    const myDisplayPic = document.getElementById("myDisplayPic");
+    const partnerDisplayPic = document.getElementById("partnerDisplayPic");
+    const frameTitleText = document.getElementById("frameTitleText");
     const chatForm = document.getElementById("chatForm");
     const messageInput = document.getElementById("messageInput");
     const conversationLog = document.getElementById("conversationLog");
@@ -972,17 +1192,33 @@
       toastTimer = setTimeout(() => toast.classList.remove("show"), 5200);
     }
 
-    function updatePartnerName() {
+    function updateNames() {
+      const myName = myNameInput.value.trim() || "Me";
       const name = partnerNameInput.value.trim() || "Friend";
+      myNameEls.forEach(el => {
+        el.textContent = myName;
+      });
       partnerNameEls.forEach(el => {
         el.textContent = name;
       });
+      frameTitleText.classList.toggle("custom-title", name !== "Axel");
+    }
+
+    function updatePhoto(input, displayPic) {
+      const [file] = input.files;
+      if (!file) return;
+      const reader = new FileReader();
+      reader.addEventListener("load", () => {
+        displayPic.style.setProperty("--photo", `url("${reader.result}")`);
+        displayPic.classList.add("has-photo");
+      });
+      reader.readAsDataURL(file);
     }
 
     function appendMessage(text) {
       const message = document.createElement("p");
       message.className = "message me";
-      message.innerHTML = `<span class="sender">Alex</span> says:<br>${escapeHtml(text)}`;
+      message.innerHTML = `<span class="sender my-name">${escapeHtml(myNameInput.value.trim() || "Me")}</span> says:<br><span class="message-text">${escapeHtml(text)}</span>`;
       conversationLog.appendChild(message);
       conversationLog.scrollTop = conversationLog.scrollHeight;
     }
@@ -1015,7 +1251,10 @@
     });
 
     triggerToast.addEventListener("click", triggerSigninToast);
-    partnerNameInput.addEventListener("input", updatePartnerName);
+    myNameInput.addEventListener("input", updateNames);
+    partnerNameInput.addEventListener("input", updateNames);
+    myPhotoInput.addEventListener("change", () => updatePhoto(myPhotoInput, myDisplayPic));
+    partnerPhotoInput.addEventListener("change", () => updatePhoto(partnerPhotoInput, partnerDisplayPic));
 
     chatForm.addEventListener("submit", event => {
       event.preventDefault();
@@ -1033,7 +1272,7 @@
       }
     });
 
-    updatePartnerName();
+    updateNames();
     updateClock();
     setInterval(updateClock, 1000);
     setTimeout(triggerSigninToast, 700);
