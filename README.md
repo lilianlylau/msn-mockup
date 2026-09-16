@@ -21,6 +21,8 @@ http://localhost:8000
 
 - `index.html` contains all HTML, CSS, and JavaScript.
 - `reference/windows-wallpaper.jpeg` is the desktop wallpaper.
+- `reference/smile-with-tongue-out.png` is the transparent MSN `:P` emoticon used in chat messages.
+- `reference/open-mouthed-smile.png` is the transparent MSN `:D` emoticon used in chat messages.
 - `README.md` is this handoff guide.
 
 ## Good Next-Session Workflow
@@ -130,4 +132,5 @@ Important functions:
 - Draggable chat window.
 - Editable active chat partner name.
 - Chat input supports Send button and Enter.
-
+- Typing `:P` or `:p` in the chat input renders the original transparent smile-with-tongue-out MSN emoticon.
+- Typing `:D` or `:d` renders the original transparent open-mouthed-smile MSN emoticon.
