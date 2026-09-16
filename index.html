@@ -835,10 +835,10 @@
       color: white;
       font-weight: bold;
       line-height: 17px;
-      text-shadow: 1px 1px #0d357a;
+      text-shadow: 1px 1px #174697;
       background:
-        linear-gradient(180deg, rgba(105, 180, 255, .48) 0%, rgba(105, 180, 255, 0) 34%),
-        linear-gradient(180deg, #1686ed 0%, #0871df 52%, #2864ce 100%);
+        linear-gradient(180deg, rgba(255, 255, 255, .22) 0%, rgba(255, 255, 255, 0) 38%),
+        linear-gradient(90deg, #397bdd 0%, #326ed8 55%, #285dcc 100%);
     }
 
     .chat.image-frame .frame-title-text.custom-title {
@@ -1085,9 +1085,9 @@
       <div class="frame-titlebar titlebar" aria-hidden="true"></div>
       <div class="frame-title-text" id="frameTitleText"><span class="partner-name">iTz_soccer_man</span> - Conversation</div>
       <div class="conversation-log" id="conversationLog" aria-live="polite" contenteditable="true" spellcheck="true" aria-label="Editable conversation history">
-        <div class="conversation-address">To: <strong class="partner-name">iTz_soccer_man</strong> &lt;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;@hotmail.com&gt;</div>
-        <p class="message me"><span class="sender my-name">~xoxogurl~</span> says:<br><span class="message-text">sup</span></p>
-        <p class="message them"><span class="sender partner-name">iTz_soccer_man</span> says:<br><span class="message-text">nm u?</span></p>
+        <div class="conversation-address">To: <strong class="partner-name">iTz_soccer_man</strong> &lt;call_me_soccer_master_3000@hotmail.com&gt;</div>
+        <p class="message me"><span class="sender my-name">~xoxogurl~</span> says:<br><span class="message-text">sup :D</span></p>
+        <p class="message them"><span class="sender partner-name">iTz_soccer_man</span> says:<br><span class="message-text">nm u? :P</span></p>
         <p class="message me"><span class="sender my-name">~xoxogurl~</span> says:<br><span class="message-text">same</span></p>
       </div>
       <div class="frame-photo them has-photo" id="partnerDisplayPic" style="--photo: url('reference/soccer-profile-image.jpeg')" aria-label="Their display picture"></div>
@@ -1235,6 +1235,12 @@
         .replace(/:d/gi, '<img class="emoticon" src="reference/open-mouthed-smile.png" alt=":D">');
     }
 
+    function renderDefaultEmoticons() {
+      conversationLog.querySelectorAll(".message-text").forEach(messageText => {
+        messageText.innerHTML = renderMessageText(messageText.textContent);
+      });
+    }
+
     function escapeHtml(value) {
       return value.replace(/[&<>"']/g, char => ({
         "&": "&amp;",
@@ -1284,6 +1290,7 @@
       }
     });
 
+    renderDefaultEmoticons();
     updateNames();
     updateClock();
     setInterval(updateClock, 1000);
