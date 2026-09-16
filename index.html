@@ -1059,6 +1059,10 @@
         <button class="xp-button" id="triggerToast" type="button">Trigger Sign-in</button>
       </div>
       <div class="control-row">
+        <label for="desktopTimeInput">Desktop time</label>
+        <input id="desktopTimeInput" type="time" value="21:17">
+      </div>
+      <div class="control-row">
         <div class="control-grid">
           <div>
             <label for="myNameInput">Your chat name</label>
@@ -1197,7 +1201,7 @@
     </div>
     <div class="tray">
       <img class="tray-icon" src="reference/msn-icon-transparent.png" alt="MSN Messenger">
-      <span class="clock" id="clock">--:--</span>
+      <span class="clock" id="clock">9:17 PM</span>
     </div>
   </footer>
 
@@ -1221,6 +1225,7 @@
     const messageInput = document.getElementById("messageInput");
     const conversationLog = document.getElementById("conversationLog");
     const clock = document.getElementById("clock");
+    const desktopTimeInput = document.getElementById("desktopTimeInput");
     const signinSound = new Audio("audio/msn-login.m4a");
     const messageSound = new Audio("audio/msn-message.m4a");
     signinSound.preload = "auto";
@@ -1347,11 +1352,12 @@
     }
 
     function updateClock() {
-      const now = new Date();
-      clock.textContent = now.toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit"
-      });
+      const [hourValue, minute = "00"] = desktopTimeInput.value.split(":");
+      const hour = Number(hourValue);
+      if (!Number.isInteger(hour)) return;
+      const period = hour >= 12 ? "PM" : "AM";
+      const displayHour = hour % 12 || 12;
+      clock.textContent = `${displayHour}:${minute} ${period}`;
     }
 
     windows.forEach(windowEl => {
@@ -1366,6 +1372,7 @@
     triggerToast.addEventListener("click", triggerSigninToast);
     myNameInput.addEventListener("input", updateNames);
     partnerNameInput.addEventListener("input", updateNames);
+    desktopTimeInput.addEventListener("input", updateClock);
     myPhotoInput.addEventListener("change", () => updatePhoto(myPhotoInput, myDisplayPic));
     partnerPhotoInput.addEventListener("change", () => updatePhoto(partnerPhotoInput, partnerDisplayPic));
 
@@ -1398,7 +1405,6 @@
     renderDefaultEmoticons();
     updateNames();
     updateClock();
-    setInterval(updateClock, 1000);
   </script>
 </body>
 </html>
